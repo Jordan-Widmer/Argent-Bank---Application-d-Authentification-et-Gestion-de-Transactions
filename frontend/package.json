@@ -1,0 +1,20 @@
+{
+    "name": "argent-bank-frontend",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Frontend for Argent Bank application",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview"
+    },
+    "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-router-dom": "^6.12.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.0.0",
+        "vite": "^4.3.9"
+    }
+}
