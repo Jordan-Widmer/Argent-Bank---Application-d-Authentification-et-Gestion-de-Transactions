@@ -1,8 +1,8 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import UserProfilePage from "../pages/UserProfilePage";
-import SignInPage from "../pages/SignInPage";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from '../pages/HomePage';
+import UserProfilePage from '../pages/UserProfilePage';
+import SignInPage from '../pages/SignInPage';
 
 function Paths() {
   return (

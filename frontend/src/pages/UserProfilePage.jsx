@@ -1,34 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import User from '../components/User';
 import Account from '../components/Account';
 import Footer from '../components/Footer';
+import { fetchUserProfile } from '../api/api';
 
 function UserProfilePage() {
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    const token = 'votre_jwt_token'; // Remplacez par le véritable jeton JWT
+    const fetchData = async () => {
+      try {
+        const data = await fetchUserProfile(token);
+        setUserProfile(data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération du profil', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!userProfile) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <NavBar />
       <main className="main bg-dark">
         <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          <h1>Welcome back<br />{userProfile.name}!</h1>
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
-        <Account
-          title="Argent Bank Checking (x8349)"
-          amount="$2,082.79"
-          description="Available Balance"
-        />
-        <Account
-          title="Argent Bank Savings (x6712)"
-          amount="$10,928.42"
-          description="Available Balance"
-        />
-        <Account
-          title="Argent Bank Credit Card (x8349)"
-          amount="$184.30"
-          description="Current Balance"
-        />
+        {userProfile.accounts.map((account) => (
+          <Account
+            key={account.id}
+            title={account.title}
+            amount={account.amount}
+            description={account.description}
+          />
+        ))}
       </main>
       <Footer />
     </div>
