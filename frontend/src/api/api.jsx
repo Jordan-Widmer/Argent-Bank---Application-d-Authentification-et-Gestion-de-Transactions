@@ -1,6 +1,9 @@
 const BASE_URL = 'http://localhost:3001/api/v1';
 
-export async function fetchUserProfile(token) {
+export async function fetchUserProfile() {
+  const token = localStorage.getItem('jwtToken'); // Get the JWT from local storage
+  console.log('Token avant d\'envoyer la requête: ', token);
+
   try {
     const response = await fetch(`${BASE_URL}/user/profile`, {
       headers: {
@@ -32,7 +35,10 @@ export async function loginUser(credentials) {
 
     if (response.ok) {
       const data = await response.json();
-      return data;
+      console.log('Réponse après la connexion: ', data); // Log the entire response
+      const token = data.body.token; // Get the JWT from the response
+      localStorage.setItem('jwtToken', token); // Save the JWT to local storage
+      return token;
     } else {
       throw new Error('Erreur d\'authentification');
     }

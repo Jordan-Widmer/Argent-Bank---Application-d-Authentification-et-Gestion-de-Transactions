@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import { loginUser } from '../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function SignInPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const credentials = { email: username, password };
-      const data = await loginUser(credentials);
-      window.location.href = './user.html';
+      await loginUser(credentials); // This now saves the JWT to local storage
+      navigate('/profile');
     } catch (error) {
       console.error('Erreur d\'authentification', error);
     }

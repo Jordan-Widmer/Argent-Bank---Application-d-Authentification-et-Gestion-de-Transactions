@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
-import User from '../components/User';
 import Account from '../components/Account';
 import Footer from '../components/Footer';
 import { fetchUserProfile } from '../api/api';
@@ -9,7 +8,7 @@ function UserProfilePage() {
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
-    const token = 'votre_jwt_token'; // Remplacez par le véritable jeton JWT
+    const token = localStorage.getItem('jwtToken'); // Obtenir le jeton JWT du localStorage
     const fetchData = async () => {
       try {
         const data = await fetchUserProfile(token);
@@ -35,7 +34,7 @@ function UserProfilePage() {
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
-        {userProfile.accounts.map((account) => (
+        {userProfile.accounts && userProfile.accounts.map((account) => (
           <Account
             key={account.id}
             title={account.title}
