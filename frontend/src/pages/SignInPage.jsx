@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import { loginUser } from '../api/api';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../components/AuthContext'; // Importez le contexte d'authentification
 
 function SignInPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  
+  // Utilisez le contexte d'authentification pour accéder à la fonction setIsLoggedIn
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +19,7 @@ function SignInPage() {
     try {
       const credentials = { email: username, password };
       await loginUser(credentials); // This now saves the JWT to local storage
+      setIsLoggedIn(true); // Mettez à jour l'état isLoggedIn après une connexion réussie
       navigate('/profile');
     } catch (error) {
       console.error('Erreur d\'authentification', error);

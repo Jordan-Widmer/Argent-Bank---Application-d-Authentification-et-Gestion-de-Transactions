@@ -1,25 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import NavBar from '../components/NavBar';
 import Account from '../components/Account';
 import Footer from '../components/Footer';
 import { fetchUserProfile } from '../api/api';
+import { AuthContext } from '../components/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function UserProfilePage() {
   const [userProfile, setUserProfile] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken'); // Obtenir le jeton JWT du localStorage
-    const fetchData = async () => {
-      try {
-        const data = await fetchUserProfile(token);
-        setUserProfile(data);
-      } catch (error) {
-        console.error('Erreur lors de la récupération du profil', error);
-      }
-    };
+    if (!isLoggedIn || !token) {
+      navigate('/sign-in');
+    } else {
+      const fetchData = async () => {
+        try {
+          const data = await fetchUserProfile(token);
+          setUserProfile(data);
+        } catch (error) {
+          console.error('Erreur lors de la récupération du profil', error);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [isLoggedIn, navigate]);
 
   if (!userProfile) {
     return <div>Loading...</div>;
