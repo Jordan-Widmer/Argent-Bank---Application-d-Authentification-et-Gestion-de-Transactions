@@ -1,28 +1,39 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { AuthContext } from '../components/AuthContext';
+import { loginUser } from '../api/api';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import { loginUser } from '../api/api';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../components/AuthContext'; // Importez le contexte d'authentification
 
 function SignInPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  
-  // Utilisez le contexte d'authentification pour accéder à la fonction setIsLoggedIn
-  const { setIsLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      login(token);
+      navigate('/profile'); // Redirige automatiquement si un token est présent
+    }
+  }, [login, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const credentials = { email: username, password };
-      await loginUser(credentials); // This now saves the JWT to local storage
-      setIsLoggedIn(true); // Mettez à jour l'état isLoggedIn après une connexion réussie
-      navigate('/profile');
+      const response = await loginUser(credentials);
+
+      if (response.status === 200 && response.body && response.body.token) {
+        login(response.body.token);
+        navigate('/profile'); // Redirige vers la page /profile après la connexion réussie
+      } else {
+        throw new Error('Erreur d\'authentification');
+      }
     } catch (error) {
-      console.error('Erreur d\'authentification', error);
+      console.error(error);
     }
   };
 

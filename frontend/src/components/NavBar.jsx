@@ -4,13 +4,11 @@ import { AuthContext } from './AuthContext';
 import argentBankLogo from '../assets/img/argentBankLogo.png';
 
 function NavBar() {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    // Lorsque l'utilisateur se déconnecte, supprimer le JWT du localStorage
-    localStorage.removeItem('jwtToken');
-    setIsLoggedIn(false);
+    logout(); // Appelle la fonction logout pour se déconnecter
     navigate('/sign-in');
   };
 
