@@ -10,6 +10,7 @@ export async function fetchUserProfile(token) {
 
     if (response.ok) {
       const data = await response.json();
+      console.log('fetchUserProfile data:', data); // Nouveau log de console
       return data;
     } else {
       throw new Error('Erreur lors de la récupération du profil');
@@ -35,7 +36,9 @@ export async function loginUser(credentials) {
       console.log('Réponse après la connexion: ', data);
       const token = data.body.token;
       localStorage.setItem('jwtToken', token);
-      return token;
+      
+      // Retournez l'objet complet `data` (qui inclut le statut et le body)
+      return data;
     } else {
       throw new Error('Erreur d\'authentification');
     }

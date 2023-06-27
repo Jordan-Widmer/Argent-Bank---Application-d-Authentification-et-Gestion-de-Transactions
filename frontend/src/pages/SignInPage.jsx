@@ -21,11 +21,14 @@ function SignInPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const credentials = { email: username, password };
       const response = await loginUser(credentials);
-
+  
+      console.log('Status:', response.status); // log pour vérifier le statut
+      console.log('Body:', response.body); // log pour vérifier les données de la réponse
+  
       if (response.status === 200 && response.body && response.body.token) {
         login(response.body.token);
         navigate('/profile'); // Redirige vers la page /profile après la connexion réussie
@@ -35,7 +38,7 @@ function SignInPage() {
     } catch (error) {
       console.error(error);
     }
-  };
+  };    
 
   return (
     <div>

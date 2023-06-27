@@ -28,11 +28,20 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (token) => {
+  const login = async (token) => {
     localStorage.setItem('jwtToken', token);
     setIsLoggedIn(true);
-    navigate('/profile'); // Redirection vers la page /profile après la connexion réussie
-  };
+  
+    try {
+      const data = await fetchUserProfile(token);
+      console.log('UserProfile Data:', data); // Nouveau log de console
+      setUserProfile(data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du profil', error);
+    }
+  
+    navigate('/profile'); // Redirige vers la page /profile après la connexion réussie
+  };    
 
   const logout = () => {
     localStorage.removeItem('jwtToken');

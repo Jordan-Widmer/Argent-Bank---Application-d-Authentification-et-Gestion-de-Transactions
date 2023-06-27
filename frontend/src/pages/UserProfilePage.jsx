@@ -1,29 +1,16 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import NavBar from '../components/NavBar';
 import Account from '../components/Account';
 import Footer from '../components/Footer';
 import { AuthContext } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserProfile } from '../api/api';
 
 function User() {
   const { userProfile } = useContext(AuthContext);
-  const [accounts, setAccounts] = useState([]);
 
-  useEffect(() => {
-    const fetchUserAccounts = async () => {
-      try {
-        const response = await fetchUserProfile(); // Utiliser la fonction fetchUserProfile
-        if (response.status === 200 && response.body) {
-          setAccounts(response.body.accounts);
-        }
-      } catch (error) {
-        console.error('Error fetching user accounts', error);
-      }
-    };
-
-    fetchUserAccounts();
-  }, []);
+  if (!userProfile) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className="main bg-dark">
@@ -32,14 +19,14 @@ function User() {
         <button className="edit-button">Edit Name</button>
       </div>
       <h2 className="sr-only">Accounts</h2>
-      {accounts.map((account) => (
+      {userProfile.accounts ? userProfile.accounts.map((account) => (
         <Account
           key={account.id}
           title={account.title}
           amount={account.amount}
           description={account.description}
         />
-      ))}
+      )) : <div>Loading accounts...</div>}
     </main>
   );
 }
@@ -60,7 +47,7 @@ function UserProfilePage() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar userProfile={userProfile} />
       <User />
       <Footer />
     </div>
