@@ -5,11 +5,13 @@ import iconSecurity from '../assets/img/icon-security.png';
 
 function FeatureItem({ title, children, imgSrc, imgAlt }) {
   return (
-    <div className="feature-item">
-      <img src={imgSrc} alt={imgAlt} className="feature-icon" />
-      <h3 className="feature-item-title">{title}</h3>
-      <p>{children}</p>
-    </div>
+    <>
+      <div className="feature-item">
+        <img src={imgSrc} alt={imgAlt} className="feature-icon" />
+        <h3 className="feature-item-title">{title}</h3>
+        <p>{children}</p>
+      </div>
+    </>
   );
 }
 

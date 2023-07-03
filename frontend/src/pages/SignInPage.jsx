@@ -41,9 +41,9 @@ function SignInPage() {
   };    
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <NavBar />
-      <main className="main bg-dark">
+      <main className="main bg-dark" style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem' }}>
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>

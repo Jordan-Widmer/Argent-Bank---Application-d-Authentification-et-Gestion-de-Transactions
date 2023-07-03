@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import NavBar from '../components/NavBar';
 import Account from '../components/Account';
 import Footer from '../components/Footer';
@@ -6,27 +6,69 @@ import { AuthContext } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function User() {
-  const { userProfile } = useContext(AuthContext);
+  const { userProfile, setUserProfile } = useContext(AuthContext);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newFirstName, setNewFirstName] = useState('');
+  const [newLastName, setNewLastName] = useState('');
 
-  if (!userProfile) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (userProfile) {
+      setNewFirstName(userProfile.body.firstName);
+      setNewLastName(userProfile.body.lastName);
+    }
+  }, [userProfile]);
+
+  const handleEditName = () => {
+    setIsEditingName(true);
+  };
+
+  const handleSaveName = () => {
+    const updatedUserProfile = { ...userProfile };
+    updatedUserProfile.body.firstName = newFirstName;
+    updatedUserProfile.body.lastName = newLastName;
+    setUserProfile(updatedUserProfile);
+
+    setIsEditingName(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingName(false);
+    setNewFirstName(userProfile.body.firstName);
+    setNewLastName(userProfile.body.lastName);
+  };
 
   return (
-    <main className="main bg-dark">
-      <div className="header">
-        <h1>Welcome back<br />{userProfile.firstName} {userProfile.lastName}!</h1>
-        <button className="edit-button">Edit Name</button>
+    <main className="main bg-dark" style={{ flex: '1' }}>
+      <div className="header" style={{ color: '#fff', marginBottom: '2rem' }}>
+        {isEditingName ? (
+          <>
+            <input
+              type="text"
+              value={newFirstName}
+              onChange={(e) => setNewFirstName(e.target.value)}
+            />
+            <input
+              type="text"
+              value={newLastName}
+              onChange={(e) => setNewLastName(e.target.value)}
+            />
+            <button onClick={handleSaveName}>Save</button>
+            <button onClick={handleCancelEdit}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <h1>
+              Welcome back<br />
+              {userProfile.body.firstName} {userProfile.body.lastName}!
+            </h1>
+            <button className="edit-button" onClick={handleEditName}>
+              Edit Name
+            </button>
+          </>
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
-      {userProfile.accounts ? userProfile.accounts.map((account) => (
-        <Account
-          key={account.id}
-          title={account.title}
-          amount={account.amount}
-          description={account.description}
-        />
-      )) : <div>Loading accounts...</div>}
+      <Account />
     </main>
   );
 }
@@ -46,7 +88,7 @@ function UserProfilePage() {
   }
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <NavBar userProfile={userProfile} />
       <User />
       <Footer />

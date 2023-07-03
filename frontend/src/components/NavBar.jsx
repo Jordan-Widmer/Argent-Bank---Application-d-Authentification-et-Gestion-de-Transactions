@@ -6,43 +6,44 @@ import argentBankLogo from '../assets/img/argentBankLogo.png';
 function NavBar() {
   const { isLoggedIn, userProfile, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log(userProfile);
 
   const handleSignOut = () => {
-    logout(); // Appelle la fonction logout pour se déconnecter
+    logout();
     navigate('/sign-in');
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
   return (
-    <nav className="main-nav">
-      <Link to="/" className="main-nav-logo">
-        <img
-          className="main-nav-logo-image"
-          src={argentBankLogo}
-          alt="Argent Bank Logo"
-        />
-        <h1 className="sr-only">Argent Bank</h1>
-      </Link>
-      <div>
-        {isLoggedIn ? (
-          <>
-            <div className="main-nav-item">
-              <i className="fa fa-user-circle"></i>
-              {userProfile && `${userProfile.firstName} ${userProfile.lastName}`}
-            </div>
-            <button onClick={handleSignOut} className="main-nav-item">
-              <i className="fa fa-sign-out"></i>
-              Sign Out
-            </button>
-          </>
-        ) : (
-          <Link to="/sign-in" className="main-nav-item">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </Link>
-        )}
-      </div>
-    </nav>
+    <header className="main-header">
+      <nav className="main-nav">
+        <Link to="/" className="main-nav-logo">
+          <img className="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
+          <h1 className="sr-only">Argent Bank</h1>
+        </Link>
+        <div>
+          {isLoggedIn ? (
+            <>
+              <Link to="/profile" className="main-nav-item" onClick={handleProfileClick}>
+                <i className="fa fa-user-circle" />
+                {userProfile?.body.firstName}
+              </Link>
+              <Link to="/" onClick={handleSignOut} className="main-nav-item">
+                <i className="fa fa-sign-out" />
+                Sign Out
+              </Link>
+            </>
+          ) : (
+            <Link to="/sign-in" className="main-nav-item">
+              <i className="fa fa-user-circle" />
+              Sign In
+            </Link>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 }
 
