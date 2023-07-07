@@ -4,6 +4,7 @@ import Account from '../components/Account';
 import Footer from '../components/Footer';
 import { AuthContext } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { fetchUserProfile, updateUserProfile } from '../api';
 
 function User() {
   const { userProfile, setUserProfile } = useContext(AuthContext);
@@ -22,13 +23,19 @@ function User() {
     setIsEditingName(true);
   };
 
-  const handleSaveName = () => {
-    const updatedUserProfile = { ...userProfile };
+  const handleSaveName = async () => {
+    const updatedUserProfile = Object.assign(userProfile);
     updatedUserProfile.body.firstName = newFirstName;
     updatedUserProfile.body.lastName = newLastName;
     setUserProfile(updatedUserProfile);
 
-    setIsEditingName(false);
+    try {
+      await updateUserProfile(userProfile.token, newFirstName, newLastName); // Envoie les changements à la base de données 
+      setIsEditingName(false);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du profil', error);
+      // Gérer l'erreur de la mise à jour du profil
+    }
   };
 
   const handleCancelEdit = () => {

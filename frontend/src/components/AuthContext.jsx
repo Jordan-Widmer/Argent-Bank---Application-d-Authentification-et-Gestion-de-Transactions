@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { fetchUserProfile } from '../api/api';
+import { fetchUserProfile } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
@@ -23,9 +23,8 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(true);
 
     try {
-      const data = await fetchUserProfile(token);
-      console.log('UserProfile Data:', data); // Nouveau log de console
-      setUserProfile(data);
+      const userProfile = await fetchUserProfile(token);
+      setUserProfile(userProfile);
     } catch (error) {
       console.error('Erreur lors de la récupération du profil', error);
     }
