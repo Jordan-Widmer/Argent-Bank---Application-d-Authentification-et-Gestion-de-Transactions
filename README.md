@@ -30,7 +30,7 @@ mongo --version
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Start local dev server
 npm run dev:server
