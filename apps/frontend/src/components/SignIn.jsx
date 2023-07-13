@@ -1,9 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import {AuthContext} from "./AuthContext";
 
 function SignIn() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
+
+    // Récupération du contexte d'authentification
+    const {login} = useContext(AuthContext);
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -17,9 +21,19 @@ function SignIn() {
         setRememberMe(e.target.checked);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Gérer la soumission du formulaire
+
+        // Ici, vous devrez probablement remplacer cette partie par votre propre logique de connexion.
+        // Cela pourrait impliquer une requête à votre API pour récupérer le jeton JWT, puis appeler la fonction de connexion.
+        const token = await someApi.login(username, password); // Remplacez ceci par votre appel d'API
+        login(token);
+
+        // Si "remember me" est sélectionné, stockez les informations d'identification (ou le jeton JWT) dans le local storage
+        if (rememberMe) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('token', token);
+        }
     };
 
     return (

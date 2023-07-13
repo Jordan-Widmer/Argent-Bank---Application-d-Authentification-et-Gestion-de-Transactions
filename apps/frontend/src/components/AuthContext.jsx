@@ -4,39 +4,52 @@ import {useNavigate} from "react-router-dom";
 
 export const AuthContext = createContext();
 
+const getToken = () => localStorage.getItem("jwtToken");
+const setToken = (token) => localStorage.setItem("jwtToken", token);
+const removeToken = () => localStorage.removeItem("jwtToken");
+
 export const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userProfile, setUserProfile] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken");
+        const token = getToken();
         if (token) {
             login(token);
-        } else {
-            setIsLoggedIn(false);
         }
     }, []);
 
     const login = async (token) => {
-        localStorage.setItem("jwtToken", token);
+        setToken(token);
         setIsLoggedIn(true);
 
         try {
             const userProfile = await fetchUserProfile(token);
-            console.error("userProfile", userProfile);
             setUserProfile(userProfile);
         } catch (error) {
             console.error("Erreur lors de la récupération du profil", error);
+            // TODO: show error to user
         }
+    };
 
-        navigate("/profile"); // Redirige vers la page /profile après la connexion réussie
+    const activeLogin = async (token) => {
+        await login(token);
+        if (userProfile) {
+            navigate("/profile");
+        }
     };
 
     const logout = () => {
-        localStorage.removeItem("jwtToken");
+        removeToken();
         setIsLoggedIn(false);
     };
 
-    return <AuthContext.Provider value={{isLoggedIn, login, logout, userProfile, setUserProfile}}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{isLoggedIn, login: activeLogin, logout, userProfile, setUserProfile}}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
+
+export default AuthProvider;

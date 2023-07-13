@@ -70,7 +70,7 @@ function Account() {
                                 <button onClick={handleCancelEdit}>Cancel</button>
                             </>
                         ) : (
-                            <button className="transaction-button" onClick={handleEditName}>
+                            <button className="transaction-button">
                                 View transactions
                             </button>
                         )}

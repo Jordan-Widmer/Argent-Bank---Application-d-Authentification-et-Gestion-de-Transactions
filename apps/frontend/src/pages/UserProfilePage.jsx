@@ -49,24 +49,26 @@ function User() {
     return (
         <main className="main bg-dark" style={{flex: "1"}}>
             <div className="header" style={{color: "#fff", marginBottom: "2rem"}}>
+                <h1>
+                    Welcome back
+                    <br />
+                    {userProfile.firstName} {userProfile.lastName}!
+                </h1>
                 {isEditingName ? (
                     <>
-                        <input type="text" value={newFirstName} onChange={(e) => setNewFirstName(e.target.value)} />
-                        <input type="text" value={newLastName} onChange={(e) => setNewLastName(e.target.value)} />
-                        <button onClick={handleSaveName}>Save</button>
-                        <button onClick={handleCancelEdit}>Cancel</button>
+                        <div>
+                            <input type="text" value={newFirstName} onChange={(e) => setNewFirstName(e.target.value)} />
+                            <input type="text" value={newLastName} onChange={(e) => setNewLastName(e.target.value)} />
+                        </div>
+                        <div>
+                            <button onClick={handleSaveName}>Save</button>
+                            <button onClick={handleCancelEdit}>Cancel</button>
+                        </div>
                     </>
                 ) : (
-                    <>
-                        <h1>
-                            Welcome back
-                            <br />
-                            {userProfile.firstName} {userProfile.lastName}!
-                        </h1>
-                        <button className="edit-button" onClick={handleEditName}>
-                            Edit Name
-                        </button>
-                    </>
+                    <button className="edit-button" onClick={handleEditName}>
+                        Edit Name
+                    </button>
                 )}
             </div>
             <h2 className="sr-only">Accounts</h2>
