@@ -1,9 +1,11 @@
-import React, {useState, useContext} from "react";
-import {updateUserProfile} from "../api";
-import {AuthContext} from "./AuthContext";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../api";
+import { setUserProfile } from "../store/actions"; // Correction de l'import
 
 function Account() {
-    const {userProfile, setUserProfile} = useContext(AuthContext);
+    const userProfile = useSelector(state => state.user.userProfile);
+    const dispatch = useDispatch();
     const [isEditingName, setIsEditingName] = useState(false);
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
@@ -16,15 +18,17 @@ function Account() {
         if (!userProfile) {
             return;
         }
-        const profile = Object.assign(userProfile, {
+        const profile = {
+            ...userProfile,
             firstName: newFirstName,
             lastName: newLastName
-        });
-        console.error("test", profile);
+        };
 
         updateUserProfile(userProfile)
-            .then(() => setUserProfile(profile))
-            .then(() => setIsEditingName(false))
+            .then(() => {
+                dispatch(setUserProfile(profile));
+                setIsEditingName(false);
+            })
             .catch((err) => console.error(err));
     };
 
