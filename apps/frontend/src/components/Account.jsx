@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from "../api";
-import { setUserProfile } from "../store/actions"; // Correction de l'import
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUserProfile} from "../api";
+import {setUserProfile} from "../store/actions"; // Correction de l'import
+import {useProfile} from "../hooks/useProfile";
 
 function Account() {
-    const userProfile = useSelector(state => state.user.userProfile);
+    const userProfile = useProfile().get();
     const dispatch = useDispatch();
     const [isEditingName, setIsEditingName] = useState(false);
     const [newFirstName, setNewFirstName] = useState("");
@@ -74,9 +75,7 @@ function Account() {
                                 <button onClick={handleCancelEdit}>Cancel</button>
                             </>
                         ) : (
-                            <button className="transaction-button">
-                                View transactions
-                            </button>
+                            <button className="transaction-button">View transactions</button>
                         )}
                     </div>
                 </section>

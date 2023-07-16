@@ -1,22 +1,8 @@
-const BASE_URL = "http://localhost:3001/api/v1";
+import {fetchApi} from "../fetchApi.js";
+import {retrieveToken} from "../retrieveToken.js";
 
-const retrieveToken = () => {
-    return localStorage.getItem("jwtToken");
-};
-
-const fetchApi = async ({url, params}) => {
-    if (!url) {
-        return;
-    }
-    if (!params) {
-        return;
-    }
-    const requestedUrl = `${BASE_URL}${url}`;
-    const response = await fetch(requestedUrl, params).catch((err) => new Error(err));
-    return await response.json();
-};
-
-export const fetchUserProfile = async (token) => {
+export const fetchUserProfile = async () => {
+    const token = retrieveToken();
     if (!token) {
         return;
     }

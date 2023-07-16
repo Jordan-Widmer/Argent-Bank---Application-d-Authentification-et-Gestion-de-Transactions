@@ -31,8 +31,8 @@ function SignIn() {
 
         // Si "remember me" est sélectionné, stockez les informations d'identification (ou le jeton JWT) dans le local storage
         if (rememberMe) {
-            localStorage.setItem('username', username);
-            localStorage.setItem('token', token);
+            localStorage.setItem("username", username);
+            localStorage.setItem("token", token);
         }
     };
 
