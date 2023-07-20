@@ -2,10 +2,9 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
-export const logIn = (token) => {
+export const logIn = () => {
     return {
         type: 'LOG_IN',
-        payload: token,
     };
 };
 

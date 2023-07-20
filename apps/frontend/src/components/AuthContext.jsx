@@ -4,13 +4,26 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logIn, logout, updateProfile} from "../redux/actions";
 
-const getToken = () => localStorage.getItem("jwtToken");
-const setToken = (token) => localStorage.setItem("jwtToken", token);
-const removeToken = () => localStorage.removeItem("jwtToken");
+const getToken = () => {
+    const token = localStorage.getItem("jwtToken");
+    console.log('getToken:', token);
+    return token;
+}
+const setToken = (token) => {
+    console.log('setToken:', token);
+    localStorage.setItem("jwtToken", token);
+}
+const removeToken = () => {
+    console.log('removeToken');
+    localStorage.removeItem("jwtToken");
+}
 
 export const AuthProvider = ({children}) => {
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector(state => state.isLoggedIn);
+    const isLoggedIn = useSelector(state => {
+        console.log('isLoggedIn:', state.isLoggedIn);
+        return state.isLoggedIn;
+    });
     const userProfile = useSelector(state => state.userProfile);
     const navigate = useNavigate();
 
@@ -23,11 +36,11 @@ export const AuthProvider = ({children}) => {
 
     const activeLogin = async (token) => {
         setToken(token);
-        dispatch(logIn(token)); // Modification ici
 
         try {
             const userProfile = await fetchUserProfile(token);
             dispatch(updateProfile(userProfile));
+            dispatch(logIn());  // move it here
             navigate("/profile");
         } catch (error) {
             console.error("Erreur lors de la récupération du profil", error);
@@ -42,10 +55,8 @@ export const AuthProvider = ({children}) => {
 
     return (
         <div>
-            {isLoggedIn ? (
+            {isLoggedIn && (
                 <button onClick={activeLogout}>Logout</button>
-            ) : (
-                <button onClick={() => activeLogin("fakeToken")}>Login</button>
             )}
             {children}
         </div>

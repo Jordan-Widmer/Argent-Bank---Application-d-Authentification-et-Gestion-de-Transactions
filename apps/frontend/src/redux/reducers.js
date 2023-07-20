@@ -3,6 +3,7 @@ import { LOGIN, LOGOUT, UPDATE_PROFILE } from './actions';
 const initialState = {
     isLoggedIn: false,
     userProfile: null,
+    token: null, // nouveau champ pour le token
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,13 +12,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                userProfile: action.payload,
             };
         case LOGOUT:
             return {
                 ...state,
                 isLoggedIn: false,
                 userProfile: null,
+                token: null, // réinitialise le token ici
             };
         case UPDATE_PROFILE:
             return {

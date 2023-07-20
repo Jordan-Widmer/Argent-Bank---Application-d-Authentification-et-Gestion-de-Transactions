@@ -1,8 +1,8 @@
+// UserProfilePage.jsx
 import React, {useEffect, useState} from "react";
 import NavBar from "../components/NavBar";
 import Account from "../components/Account";
 import Footer from "../components/Footer";
-import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {updateProfile} from "../redux/actions";
 import {updateUserProfile} from "../api";
@@ -80,15 +80,7 @@ function User() {
 }
 
 function UserProfilePage() {
-    const isLoggedIn = useSelector(state => state.isLoggedIn);
     const userProfile = useSelector(state => state.userProfile);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate("/sign-in");
-        }
-    }, [isLoggedIn, navigate]);
 
     if (!userProfile) {
         return <div>Loading...</div>;

@@ -1,40 +1,32 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {loginUser} from "../api";
+// SignInPage.jsx
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../api";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import {useNavigate} from "react-router-dom";
-import {logIn} from "../redux/actions";
+import { useNavigate } from "react-router-dom";
+import { logIn } from "../redux/actions";
 
 function SignInPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector(state => state.isLoggedIn);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem("jwtToken");
-        if (token) {
-            // dispatch(logIn(token)); // Commentez ou supprimez cette ligne
-            navigate("/profile"); // Redirige automatiquement si un token est présent
-        }
-    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const credentials = {email: username, password};
+            const credentials = { email: username, password };
             const response = await loginUser(credentials);
 
-            console.log("Status:", response.status); // log pour vérifier le statut
-            console.log("Body:", response.body); // log pour vérifier les données de la réponse
+            console.log("Status:", response.status);
+            console.log("Body:", response.body);
 
             if (response.status === 200 && response.body && response.body.token) {
-                localStorage.setItem("jwtToken", response.body.token); // Stocke le token dans le localStorage
+                localStorage.setItem("jwtToken", response.body.token);
                 dispatch(logIn(response.body.token));
-                navigate("/profile"); // Redirige vers la page /profile après la connexion réussie
+                navigate("/profile", { replace: true });
             } else {
                 throw new Error("Erreur d'authentification");
             }
@@ -43,11 +35,10 @@ function SignInPage() {
         }
     };
 
-
     return (
-        <div style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <NavBar />
-            <main className="main bg-dark" style={{flex: "1", display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem"}}>
+            <main className="main bg-dark" style={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem" }}>
                 <section className="sign-in-content">
                     <i className="fa fa-user-circle sign-in-icon"></i>
                     <h1>Sign In</h1>
