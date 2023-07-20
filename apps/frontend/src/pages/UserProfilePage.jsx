@@ -1,13 +1,15 @@
-import React, {useEffect, useContext, useState} from "react";
+import React, {useEffect, useState} from "react";
 import NavBar from "../components/NavBar";
 import Account from "../components/Account";
 import Footer from "../components/Footer";
-import {AuthContext} from "../components/AuthContext";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {updateProfile} from "../redux/actions";
 import {updateUserProfile} from "../api";
 
 function User() {
-    const {userProfile, setUserProfile} = useContext(AuthContext);
+    const userProfile = useSelector(state => state.userProfile);
+    const dispatch = useDispatch();
     const [isEditingName, setIsEditingName] = useState(false);
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
@@ -24,12 +26,12 @@ function User() {
     };
 
     const handleSaveName = async () => {
-        const updatedProfile = Object.assign(userProfile, {
+        const updatedProfile = Object.assign({}, userProfile, {
             firstName: newFirstName,
             lastName: newLastName
         });
 
-        setUserProfile(updatedProfile);
+        dispatch(updateProfile(updatedProfile));
 
         try {
             await updateUserProfile(updatedProfile); // Envoie les changements à la base de données
@@ -78,7 +80,8 @@ function User() {
 }
 
 function UserProfilePage() {
-    const {isLoggedIn, userProfile} = useContext(AuthContext);
+    const isLoggedIn = useSelector(state => state.isLoggedIn);
+    const userProfile = useSelector(state => state.userProfile);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -93,7 +96,7 @@ function UserProfilePage() {
 
     return (
         <div style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
-            <NavBar userProfile={userProfile} />
+            <NavBar />
             <User />
             <Footer />
         </div>

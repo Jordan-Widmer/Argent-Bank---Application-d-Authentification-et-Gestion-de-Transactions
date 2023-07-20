@@ -1,23 +1,25 @@
-import React, {useState, useContext, useEffect} from "react";
-import {AuthContext} from "../components/AuthContext";
+import React, {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "../api";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import {useNavigate} from "react-router-dom";
+import {logIn} from "../redux/actions";
 
 function SignInPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const {login} = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(state => state.isLoggedIn);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
         if (token) {
-            login(token);
+            // dispatch(logIn(token)); // Commentez ou supprimez cette ligne
             navigate("/profile"); // Redirige automatiquement si un token est présent
         }
-    }, [login, navigate]);
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +32,8 @@ function SignInPage() {
             console.log("Body:", response.body); // log pour vérifier les données de la réponse
 
             if (response.status === 200 && response.body && response.body.token) {
-                login(response.body.token);
+                localStorage.setItem("jwtToken", response.body.token); // Stocke le token dans le localStorage
+                dispatch(logIn(response.body.token));
                 navigate("/profile"); // Redirige vers la page /profile après la connexion réussie
             } else {
                 throw new Error("Erreur d'authentification");
@@ -39,6 +42,7 @@ function SignInPage() {
             console.error(error);
         }
     };
+
 
     return (
         <div style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>

@@ -1,9 +1,11 @@
-import React, {useState, useContext} from "react";
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {updateUserProfile} from "../api";
-import {AuthContext} from "./AuthContext";
+import {updateProfile} from "../redux/actions";
 
 function Account() {
-    const {userProfile, setUserProfile} = useContext(AuthContext);
+    const userProfile = useSelector(state => state.userProfile);
+    const dispatch = useDispatch();
     const [isEditingName, setIsEditingName] = useState(false);
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
@@ -20,10 +22,9 @@ function Account() {
             firstName: newFirstName,
             lastName: newLastName
         });
-        console.error("test", profile);
 
         updateUserProfile(userProfile)
-            .then(() => setUserProfile(profile))
+            .then(() => dispatch(updateProfile(profile)))
             .then(() => setIsEditingName(false))
             .catch((err) => console.error(err));
     };

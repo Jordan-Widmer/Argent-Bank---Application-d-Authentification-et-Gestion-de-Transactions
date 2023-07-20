@@ -1,13 +1,16 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
-import {AuthContext} from "./AuthContext";
 import argentBankLogo from "../assets/img/argentBankLogo.png";
+import {useSelector, useDispatch} from "react-redux";
+import {logout} from "../redux/actions";
 
 function NavBar() {
-    const {isLoggedIn, userProfile, logout} = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(state => state.isLoggedIn);
+    const userProfile = useSelector(state => state.userProfile);
 
     const handleSignOut = () => {
-        logout();
+        dispatch(logout());
     };
 
     return (

@@ -1,13 +1,13 @@
-import React, {useState, useContext} from "react";
-import {AuthContext} from "./AuthContext";
+import React, {useState} from "react";
+import {useDispatch} from "react-redux";
+import {login} from "../redux/actions";
+import {loginUser} from "../api"; // Importer votre méthode loginUser
 
 function SignIn() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
-
-    // Récupération du contexte d'authentification
-    const {login} = useContext(AuthContext);
+    const dispatch = useDispatch();
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -24,12 +24,11 @@ function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Ici, vous devrez probablement remplacer cette partie par votre propre logique de connexion.
-        // Cela pourrait impliquer une requête à votre API pour récupérer le jeton JWT, puis appeler la fonction de connexion.
-        const token = await someApi.login(username, password); // Remplacez ceci par votre appel d'API
-        login(token);
+        // Utiliser votre méthode loginUser pour obtenir le token
+        const {token} = await loginUser({username, password});
 
-        // Si "remember me" est sélectionné, stockez les informations d'identification (ou le jeton JWT) dans le local storage
+        dispatch(login(token));
+
         if (rememberMe) {
             localStorage.setItem('username', username);
             localStorage.setItem('token', token);
