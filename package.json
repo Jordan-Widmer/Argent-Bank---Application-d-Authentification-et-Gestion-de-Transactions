@@ -7,15 +7,11 @@
         "prettier": "npx prettier --write ."
     },
     "devDependencies": {
-        "eslint": "^8.32.0",
         "eslint-config-prettier": "^8.6.0",
         "eslint-plugin-import": "^2.27.5",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-promise": "^6.1.1",
+        "eslint": "^8.32.0",
         "prettier": "^2.8.3"
-    },
-    "dependencies": {
-        "react-redux": "^8.1.1",
-        "redux": "^4.2.1"
     }
 }

@@ -28,15 +28,10 @@ function User() {
             firstName: newFirstName,
             lastName: newLastName
         });
-        /**
-         *@todo faire actions
-         */
+
         setUserProfile(updatedProfile);
 
         try {
-            /**
-             *@todo faire actions
-             */
             await updateUserProfile(updatedProfile); // Envoie les changements à la base de données
             setIsEditingName(false);
         } catch (error) {

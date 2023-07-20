@@ -2,11 +2,9 @@ import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import {AuthContext} from "./AuthContext";
 import argentBankLogo from "../assets/img/argentBankLogo.png";
-import {useProfile} from "../hooks/useProfile";
 
 function NavBar() {
-    const {isLoggedIn, logout} = useContext(AuthContext);
-    const userProfile = useProfile().get();
+    const {isLoggedIn, userProfile, logout} = useContext(AuthContext);
 
     const handleSignOut = () => {
         logout();

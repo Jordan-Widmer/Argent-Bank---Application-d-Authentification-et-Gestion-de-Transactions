@@ -1,12 +1,9 @@
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {useState, useContext} from "react";
 import {updateUserProfile} from "../api";
-import {setUserProfile} from "../store/actions"; // Correction de l'import
-import {useProfile} from "../hooks/useProfile";
+import {AuthContext} from "./AuthContext";
 
 function Account() {
-    const userProfile = useProfile().get();
-    const dispatch = useDispatch();
+    const {userProfile, setUserProfile} = useContext(AuthContext);
     const [isEditingName, setIsEditingName] = useState(false);
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
@@ -19,17 +16,15 @@ function Account() {
         if (!userProfile) {
             return;
         }
-        const profile = {
-            ...userProfile,
+        const profile = Object.assign(userProfile, {
             firstName: newFirstName,
             lastName: newLastName
-        };
+        });
+        console.error("test", profile);
 
         updateUserProfile(userProfile)
-            .then(() => {
-                dispatch(setUserProfile(profile));
-                setIsEditingName(false);
-            })
+            .then(() => setUserProfile(profile))
+            .then(() => setIsEditingName(false))
             .catch((err) => console.error(err));
     };
 
@@ -75,7 +70,9 @@ function Account() {
                                 <button onClick={handleCancelEdit}>Cancel</button>
                             </>
                         ) : (
-                            <button className="transaction-button">View transactions</button>
+                            <button className="transaction-button">
+                                View transactions
+                            </button>
                         )}
                     </div>
                 </section>
