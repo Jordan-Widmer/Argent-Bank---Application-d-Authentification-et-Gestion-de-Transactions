@@ -67,19 +67,26 @@ module.exports.loginUser = async (serviceData) => {
     }
 };
 
-module.exports.updateUserProfile = (serviceData) => {
-    const {id} = jwt.decode(serviceData.headers.authorization.split("Bearer")[1].trim());
-    if (!id) {
-        return;
+module.exports.updateUserProfile = async (serviceData) => {
+    try {
+        const jwtToken = serviceData.headers.authorization.split("Bearer")[1].trim();
+        const decodedJwtToken = jwt.decode(jwtToken);
+        const user = await User.findOneAndUpdate(
+            {_id: decodedJwtToken.id},
+            {
+                firstName: serviceData.body.firstName,
+                lastName: serviceData.body.lastName
+            },
+            {new: true}
+        );
+
+        if (!user) {
+            throw new Error("User not found!");
+        }
+
+        return user.toObject();
+    } catch (error) {
+        console.error("Error in userService.js", error);
+        throw new Error(error);
     }
-    User.findById(id)
-        .then((user) => {
-            user.firstName = serviceData.body.firstName;
-            user.lastName = serviceData.body.lastName;
-            return user.save();
-        })
-        .then((result) => {
-            console.log("updated product", result);
-        })
-        .catch((err) => new Error(err));
 };

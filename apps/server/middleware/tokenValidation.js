@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const {restart} = require("nodemon");
 
 module.exports.validateToken = (req, res, next) => {
     let response = {};
@@ -10,12 +11,9 @@ module.exports.validateToken = (req, res, next) => {
 
         const userToken = req.headers.authorization.split("Bearer")[1].trim();
         const decodedToken = jwt.verify(userToken, process.env.SECRET_KEY || "default-secret-key");
-        if (!decodedToken) {
-            return new Error("Error in token validation");
-        }
         return next();
     } catch (error) {
-        console.error(error);
+        console.error("Error in tokenValidation.js", error);
         response.status = 401;
         response.message = error.message;
     }

@@ -55,7 +55,7 @@ module.exports.updateUserProfile = async (req, res) => {
     let response = {};
 
     try {
-        const responseFromService = userService.updateUserProfile(req);
+        const responseFromService = await userService.updateUserProfile(req);
         response.status = 200;
         response.message = "Successfully updated user profile data";
         response.body = responseFromService;
