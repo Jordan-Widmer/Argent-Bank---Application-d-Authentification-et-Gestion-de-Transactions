@@ -4,7 +4,7 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 export const logIn = () => {
     return {
-        type: 'LOG_IN',
+        type: LOGIN,
     };
 };
 

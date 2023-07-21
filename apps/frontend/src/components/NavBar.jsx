@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import argentBankLogo from "../assets/img/argentBankLogo.png";
 import {useSelector, useDispatch} from "react-redux";
 import {logout} from "../redux/actions";
+import {activeLogout} from "./AuthContext";
 
 function NavBar() {
     const dispatch = useDispatch();
@@ -10,6 +11,7 @@ function NavBar() {
     const userProfile = useSelector(state => state.userProfile);
 
     const handleSignOut = () => {
+        activeLogout();
         dispatch(logout());
     };
 

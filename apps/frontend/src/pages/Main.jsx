@@ -12,7 +12,6 @@ function Main() {
     useEffect(() => {
         let timer;
         if (!isLoggedIn) {
-            // On ajoute un délai pour éviter les flashs indésirables de la page d'accueil pendant le chargement
             timer = setTimeout(() => {
                 navigate("/sign-in");
             }, 1000);
@@ -24,7 +23,7 @@ function Main() {
     }, [isLoggedIn, navigate]);
 
     if (isLoading) {
-        return <div>Loading...</div>; // Vous pouvez remplacer cela par n'importe quel écran de chargement que vous préférez
+        return <div>Loading...</div>;
     }
 
     return (

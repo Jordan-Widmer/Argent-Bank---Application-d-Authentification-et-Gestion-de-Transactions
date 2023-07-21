@@ -1,4 +1,3 @@
-// UserProfilePage.jsx
 import React, {useEffect, useState} from "react";
 import NavBar from "../components/NavBar";
 import Account from "../components/Account";
@@ -34,11 +33,11 @@ function User() {
         dispatch(updateProfile(updatedProfile));
 
         try {
-            await updateUserProfile(updatedProfile); // Envoie les changements à la base de données
+            await updateUserProfile(updatedProfile); // Send changes to the database
             setIsEditingName(false);
         } catch (error) {
             console.error("Erreur lors de la mise à jour du profil", error);
-            // Gérer l'erreur de la mise à jour du profil
+            // Handle the profile update error
         }
     };
 

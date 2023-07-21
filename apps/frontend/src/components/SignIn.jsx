@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {login} from "../redux/actions";
-import {loginUser} from "../api"; // Importer votre méthode loginUser
+import {loginUser} from "../api";
 
 function SignIn() {
     const [username, setUsername] = useState("");
@@ -24,7 +24,6 @@ function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Utiliser votre méthode loginUser pour obtenir le token
         const {token} = await loginUser({username, password});
 
         dispatch(login(token));
