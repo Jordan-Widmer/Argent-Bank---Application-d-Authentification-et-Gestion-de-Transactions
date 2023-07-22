@@ -1,6 +1,6 @@
-import {useSelector} from "react-redux";
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SignInPage from './SignInPage';
 import UserProfilePage from './UserProfilePage';
 
@@ -14,9 +14,11 @@ function Main() {
         if (!isLoggedIn) {
             timer = setTimeout(() => {
                 navigate("/sign-in");
+                setIsLoading(false); // Move setIsLoading inside the setTimeout
             }, 1000);
+        } else {
+            setIsLoading(false); // Set loading to false immediately if already logged in
         }
-        setIsLoading(false);
         return () => {
             clearTimeout(timer);
         };
