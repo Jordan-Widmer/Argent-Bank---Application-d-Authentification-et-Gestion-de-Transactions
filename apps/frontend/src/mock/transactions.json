@@ -1,0 +1,62 @@
+[
+    {
+      "id": 1,
+      "date": "2020-06-20",
+      "description": "Golden Sun Bakery",
+      "amount": 5.00,
+      "balance": 2082.79,
+      "category": "Food",
+      "notes": "Loved the croissant",
+      "transactionType": "Debit"
+    },
+    {
+      "id": 2,
+      "date": "2020-06-20",
+      "description": "Golden Sun Bakery",
+      "amount": 10.00,
+      "balance": 2087.79,
+      "category": "Food",
+      "notes": "Coffee with friends",
+      "transactionType": "Debit"
+    },
+    {
+      "id": 3,
+      "date": "2020-06-20",
+      "description": "Golden Sun Bakery",
+      "amount": 20.00,
+      "balance": 2097.79,
+      "category": "Food",
+      "notes": "Birthday cake",
+      "transactionType": "Debit"
+    },
+    {
+      "id": 4,
+      "date": "2020-06-20",
+      "description": "Golden Sun Bakery",
+      "amount": 30.00,
+      "balance": 2117.79,
+      "category": "Food",
+      "notes": "Pastries for office",
+      "transactionType": "Debit"
+    },
+    {
+      "id": 5,
+      "date": "2020-06-20",
+      "description": "Golden Sun Bakery",
+      "amount": 40.00,
+      "balance": 2147.79,
+      "category": "Food",
+      "notes": "Brunch with family",
+      "transactionType": "Debit"
+    },
+    {
+      "id": 6,
+      "date": "2020-06-20",
+      "description": "Golden Sun Bakery",
+      "amount": 50.00,
+      "balance": 2187.79,
+      "category": "Food",
+      "notes": "Anniversary celebration",
+      "transactionType": "Debit"
+    }
+  ]

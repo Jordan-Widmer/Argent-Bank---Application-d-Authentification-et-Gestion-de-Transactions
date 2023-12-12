@@ -313,3 +313,51 @@ body {
         width: 200px;
     }
 }
+
+.page-background {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    background-color: ;
+}
+.transactions-wrapper {
+    max-width: 800px;
+    margin: 160px auto;
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.transactions-wrapper h2,
+.transactions-wrapper h3,
+.transactions-wrapper p {
+    color: black;
+}
+.transactions-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+h2 {
+    font-size: 16px;
+}
+h3 {
+    font-size: 32px;
+    margin: auto;
+}
+.table-header,
+.table-data {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #252547;
+}
+.table-header {
+    color: black;
+    font-size: 12px;
+}
+.table-data {
+    color: black;
+}
+.page-loading {
+    color: #fff;
+    text-align: center;
+    padding-top: 50px;
+}

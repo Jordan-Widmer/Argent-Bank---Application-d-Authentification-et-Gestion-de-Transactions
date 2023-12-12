@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Importation de useNavigate
 import { updateUserProfile } from "../api";
 import { updateProfile } from "../redux/actions";
 
-// Move the accounts array outside the component
+// Tableau des comptes déplacé en dehors du composant
 const accounts = [
   {
     title: "Argent Bank Checking (x8349)",
@@ -22,10 +23,11 @@ const accounts = [
   },
 ];
 
-// Create a separate component for each account section
+// Composant séparé pour chaque section de compte
 function AccountSection({ account }) {
   const userProfile = useSelector((state) => state.userProfile);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Utilisez useNavigate pour la redirection
   const [isEditingName, setIsEditingName] = useState(false);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -64,6 +66,10 @@ function AccountSection({ account }) {
     setNewLastName("");
   };
 
+  const redirectToTransactions = () => {
+    navigate('/transactions'); // Chemin vers la page des transactions
+  };
+
   return (
     <section className="account">
       <div className="account-content-wrapper">
@@ -91,7 +97,7 @@ function AccountSection({ account }) {
             {error && <p>{error}</p>}
           </>
         ) : (
-          <button className="transaction-button" onClick={handleEditName}>
+          <button className="transaction-button" onClick={redirectToTransactions}>
             View transactions
           </button>
         )}
@@ -100,6 +106,7 @@ function AccountSection({ account }) {
   );
 }
 
+// Composant pour la liste des comptes
 function Account() {
   return (
     <>
