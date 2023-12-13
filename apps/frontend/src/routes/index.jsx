@@ -4,7 +4,7 @@ import { AuthProvider } from "../components/AuthContext";
 import HomePage from "../pages/HomePage";
 import UserProfilePage from "../pages/UserProfilePage";
 import SignInPage from "../pages/SignInPage";
-import TransactionsPage from "../pages/TransactionsPage"; // Assurez-vous d'importer votre nouveau composant de page
+import TransactionsPage from "../pages/TransactionsPage";
 import PrivateRoute from "../components/PrivateRoute";
 
 function Paths() {
@@ -15,7 +15,7 @@ function Paths() {
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<PrivateRoute><UserProfilePage /></PrivateRoute>} />
           <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/transactions" element={<PrivateRoute><TransactionsPage /></PrivateRoute>} /> {/* Nouvelle route pour les transactions */}
+          <Route path="/transactions/:accountType" element={<PrivateRoute><TransactionsPage /></PrivateRoute>} />
         </Routes>
       </AuthProvider>
     </Router>

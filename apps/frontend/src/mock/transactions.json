@@ -3,60 +3,121 @@
       "id": 1,
       "date": "2020-06-20",
       "description": "Golden Sun Bakery",
-      "amount": 5.00,
+      "amount": 5,
       "balance": 2082.79,
       "category": "Food",
       "notes": "Loved the croissant",
-      "transactionType": "Debit"
+      "transactionType": "Debit",
+      "accountType": "checking"
     },
     {
       "id": 2,
       "date": "2020-06-20",
       "description": "Golden Sun Bakery",
-      "amount": 10.00,
+      "amount": 10,
       "balance": 2087.79,
       "category": "Food",
       "notes": "Coffee with friends",
-      "transactionType": "Debit"
+      "transactionType": "Debit",
+      "accountType": "checking"
     },
     {
       "id": 3,
       "date": "2020-06-20",
       "description": "Golden Sun Bakery",
-      "amount": 20.00,
+      "amount": 20,
       "balance": 2097.79,
       "category": "Food",
       "notes": "Birthday cake",
-      "transactionType": "Debit"
+      "transactionType": "Debit",
+      "accountType": "checking"
     },
     {
       "id": 4,
       "date": "2020-06-20",
       "description": "Golden Sun Bakery",
-      "amount": 30.00,
+      "amount": 30,
       "balance": 2117.79,
       "category": "Food",
       "notes": "Pastries for office",
-      "transactionType": "Debit"
+      "transactionType": "Debit",
+      "accountType": "checking"
     },
     {
       "id": 5,
       "date": "2020-06-20",
       "description": "Golden Sun Bakery",
-      "amount": 40.00,
+      "amount": 40,
       "balance": 2147.79,
       "category": "Food",
       "notes": "Brunch with family",
-      "transactionType": "Debit"
+      "transactionType": "Debit",
+      "accountType": "checking"
     },
     {
       "id": 6,
       "date": "2020-06-20",
       "description": "Golden Sun Bakery",
-      "amount": 50.00,
+      "amount": 50,
       "balance": 2187.79,
       "category": "Food",
       "notes": "Anniversary celebration",
-      "transactionType": "Debit"
+      "transactionType": "Debit",
+      "accountType": "checking"
+    },
+    {
+      "id": 7,
+      "date": "2020-06-20",
+      "description": "Paiement d'intérêt",
+      "amount": 28.42,
+      "balance": 10928.42,
+      "category": "Interest",
+      "notes": "Intérêts mensuels",
+      "transactionType": "Credit",
+      "accountType": "savings"
+    },
+    {
+      "id": 8,
+      "date": "2020-06-19",
+      "description": "Achat de matériel",
+      "amount": 300,
+      "balance": 10956.84,
+      "category": "Achat",
+      "notes": "Achat de matériel de bureau",
+      "transactionType": "Debit",
+      "accountType": "savings"
+    },
+    {
+      "id": 9,
+      "date": "2020-06-18",
+      "description": "Retrait pour vacances",
+      "amount": 300,
+      "balance": 11256.84,
+      "category": "Retrait",
+      "notes": "Retrait pour les vacances d'été",
+      "transactionType": "Debit",
+      "accountType": "savings"
+    },
+    {
+      "id": 10,
+      "date": "2020-06-17",
+      "description": "Dépôt",
+      "amount": 2500,
+      "balance": 11556.84,
+      "category": "Dépôt",
+      "notes": "Dépôt de salaire",
+      "transactionType": "Credit",
+      "accountType": "savings"
+    },
+    {
+      "id": 8,
+      "date": "2020-06-22",
+      "description": "Credit Card Payment",
+      "amount": 200,
+      "balance": 184.3,
+      "category": "Payment",
+      "notes": "Monthly bill",
+      "transactionType": "Credit",
+      "accountType": "credit-card"
     }
   ]

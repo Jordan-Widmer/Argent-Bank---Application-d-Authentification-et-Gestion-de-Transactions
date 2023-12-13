@@ -1,33 +1,36 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Importation de useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { updateUserProfile } from "../api";
 import { updateProfile } from "../redux/actions";
 
-// Tableau des comptes déplacé en dehors du composant
+// Account table moved outside the component
 const accounts = [
   {
     title: "Argent Bank Checking (x8349)",
     amount: "$2,082.79",
     description: "Available Balance",
+    accountType: "checking", // Make sure to add this property to match the URL segment
   },
   {
     title: "Argent Bank Savings (x6712)",
     amount: "$10,928.42",
     description: "Available Balance",
+    accountType: "savings", // Make sure to add this property to match the URL segment
   },
   {
     title: "Argent Bank Credit Card (x8349)",
     amount: "$184.30",
     description: "Current Balance",
+    accountType: "credit-card", // Make sure to add this property to match the URL segment
   },
 ];
 
-// Composant séparé pour chaque section de compte
+// Separate component for each account section
 function AccountSection({ account }) {
   const userProfile = useSelector((state) => state.userProfile);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Utilisez useNavigate pour la redirection
+  const navigate = useNavigate(); // Use useNavigate for redirection
   const [isEditingName, setIsEditingName] = useState(false);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -66,8 +69,9 @@ function AccountSection({ account }) {
     setNewLastName("");
   };
 
+  // Update the redirectToTransactions function to include the account type
   const redirectToTransactions = () => {
-    navigate('/transactions'); // Chemin vers la page des transactions
+    navigate(`/transactions/${account.accountType}`); // Navigate to the dynamic route
   };
 
   return (
@@ -106,7 +110,7 @@ function AccountSection({ account }) {
   );
 }
 
-// Composant pour la liste des comptes
+// Component for the list of accounts
 function Account() {
   return (
     <>

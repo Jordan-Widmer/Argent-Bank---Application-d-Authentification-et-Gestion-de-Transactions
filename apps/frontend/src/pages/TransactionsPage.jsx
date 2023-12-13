@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import mockTransactions from '../mock/transactions.json';
 
 function TransactionsPage() {
   const [transactions, setTransactions] = useState([]);
+  const { accountType } = useParams();
 
   useEffect(() => {
-    setTimeout(() => setTransactions(mockTransactions), 1000);
-  }, []);
+    const filteredTransactions = mockTransactions.filter(transaction => transaction.accountType === accountType);
+    setTimeout(() => setTransactions(filteredTransactions), 1000);
+  }, [accountType]);
 
   if (transactions.length === 0) {
-    return <div className="page-loading">Loading...</div>;
+    return <div className="page-loading">Chargement...</div>;
   }
+
+// The balance of the first transaction is the available balance
+const availableBalance = transactions.length > 0 ? transactions[0].balance : 0;
+
+// Dynamic title based on account type
+const title = `Argent Bank ${accountType.charAt(0).toUpperCase() + accountType.slice(1)}`;
 
   return (
     <div className="page-background">
       <NavBar />
       <div className="transactions-wrapper">
-        <h2>Argent Bank Checking (x8349)</h2>
-        <h3>$2,082.79</h3>
-        <p>Available Balance</p>
+        <h2>{title}</h2>
+        <h3>${availableBalance.toFixed(2)}</h3>
+        <p>Solde Disponible</p>
         <table className="transactions-table">
           <thead>
             <tr>
