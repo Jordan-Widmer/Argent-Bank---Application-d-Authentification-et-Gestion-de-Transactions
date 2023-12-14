@@ -1,8 +1,0 @@
-# npm
-package-lock.json
-**/node_modules
-npm-debug.log*
-
-# pnpm
-pnpm-lock.yaml
-.pnpm-store/

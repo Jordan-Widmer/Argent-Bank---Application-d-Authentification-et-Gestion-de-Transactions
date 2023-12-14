@@ -1,3 +1,7 @@
+Sure, I can help you update the README to reflect the changes in the tech stack usage. Here's the modified README with the specified changes:
+
+---
+
 # Project #10 - Argent Bank API
 
 This codebase contains the code needed to run the backend for Argent Bank.
@@ -29,11 +33,14 @@ mongo --version
 1. Run the following commands:
 
 ```bash
-# Install dependencies
-pnpm install
+# Install dependencies for the frontend and backend
+npm install
 
-# Start local dev server
-pnpm -r dev
+# Start local dev server for the frontend
+npm run dev
+
+# Start the backend server
+npm run start
 
 # Populate database with two users
 npm run populate-db
@@ -69,4 +76,4 @@ Static HTML and CSS has been created for most of the site and is located in: `/d
 
 For some of the dynamic features, like toggling user editing, there is a mock-up for it in `/designs/wireframes/edit-user-name.png`.
 
-And for the API model that you will be proposing for transactitons, the wireframe can be found in `/designs/wireframes/transactions.png`.
+And for the API model that you will be proposing for transactions, the wireframe can be found in `/designs/wireframes/transactions.png`.
