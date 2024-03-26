@@ -4,7 +4,7 @@ import Account from "../components/Account";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../redux/actions";
-import { updateUserProfile } from "../api";
+import { fetchUserProfile, updateUserProfile } from "../api";
 
 function User() {
   const userProfile = useSelector((state) => state.userProfile);
@@ -43,10 +43,7 @@ function User() {
     const isValid = validateNames();
 
     if (isValid) {
-      const updatedProfile = Object.assign({}, userProfile, {
-        firstName: newFirstName,
-        lastName: newLastName,
-      });
+      const updatedProfile = { ...userProfile, firstName: newFirstName, lastName: newLastName };
 
       dispatch(updateProfile(updatedProfile));
 
@@ -55,7 +52,6 @@ function User() {
         setIsEditingName(false);
       } catch (error) {
         console.error("Erreur lors de la mise à jour du profil", error);
-        // Handle the profile update error
       }
     }
   };
@@ -71,11 +67,7 @@ function User() {
   return (
     <main className="main bg-dark" style={{ flex: "1" }}>
       <div className="header" style={{ color: "#fff", marginBottom: "2rem" }}>
-        <h1>
-          Welcome back
-          <br />
-          {userProfile.firstName} {userProfile.lastName}!
-        </h1>
+        <h1>Welcome back<br />{userProfile.firstName} {userProfile.lastName}!</h1>
         {isEditingName ? (
           <>
             <div>
@@ -90,19 +82,37 @@ function User() {
             </div>
           </>
         ) : (
-          <button className="edit-button" onClick={handleEditName}>
-            Edit Name
-          </button>
+          <button className="edit-button" onClick={handleEditName}>Edit Name</button>
         )}
       </div>
-      <h2 className="sr-only">Accounts</h2>
       <Account />
     </main>
   );
 }
 
 function UserProfilePage() {
-  const userProfile = useSelector((state) => state.userProfile);
+  const dispatch = useDispatch();
+  const { isLoggedIn, token } = useSelector(state => ({
+    isLoggedIn: state.isLoggedIn,
+    token: state.token
+  }));
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (isLoggedIn && token) {
+        try {
+          const userProfileData = await fetchUserProfile(token);
+          dispatch(updateProfile(userProfileData));
+        } catch (error) {
+          console.error("Failed to fetch user profile:", error);
+        }
+      }
+    };
+
+    loadProfile();
+  }, [isLoggedIn, token, dispatch]);
+
+  const userProfile = useSelector(state => state.userProfile);
 
   if (!userProfile) {
     return <div>Loading...</div>;

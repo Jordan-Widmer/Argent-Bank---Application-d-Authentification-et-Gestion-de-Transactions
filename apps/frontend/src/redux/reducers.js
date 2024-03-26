@@ -12,6 +12,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: true,
+                token: action.payload,
             };
         case LOGOUT:
             return {
@@ -23,7 +24,7 @@ const reducer = (state = initialState, action) => {
         case UPDATE_PROFILE:
             return {
                 ...state,
-                userProfile: { ...state.userProfile, ...action.payload },
+                userProfile: { ...action.payload },
             };
         default:
             return state;
